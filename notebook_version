@@ -1,0 +1,23 @@
+# View dataset directory. This directory will be recovered automatically after resetting environment. 
+!ls /home/aistudio/data
+!ls /home/aistudio/work
+#安装必要的包
+!mkdir /home/aistudio/external-libraries
+!pip install ffmpeg -t /home/aistudio/external-libraries
+# 如果需要进行持久化安装, 需要使用持久化路径, 如下方代码示例:
+# If a persistence installation is required, you need to use the persistence path as the following:
+!mkdir /home/aistudio/external-libraries
+!pip install munch -t /home/aistudio/external-libraries
+!mkdir /home/aistudio/external-libraries_1
+!pip install scikit-image -t /home/aistudio/external-libraries_1 
+# 同时添加如下代码, 这样每次环境(kernel)启动的时候只要运行下方代码即可:
+# Also add the following code, so that every time the environment (kernel) starts, just run the following code:
+import sys
+sys.path.append('/home/aistudio/external-libraries')
+sys.path.append('/home/aistudio/external-libraries_1')
+!python main.py --mode train --num_domains 3 --w_hpf 0 \
+               --lambda_reg 1 --lambda_sty 1 --lambda_ds 2 --lambda_cyc 1 \
+               --train_img_dir afhq/train \
+               --val_img_dir afhq/val
+               !python main.py --mode train --num_domains 2 --w_hpf 1  --lambda_reg 1 --lambda_sty 1 --lambda_ds 1 --lambda_cyc 1   --train_img_dir celeba_hq/train    --val_img_dir celeba_hq/val
+               
